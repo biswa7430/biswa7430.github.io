@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Meet the talented team at MIRAI VISION LAB - Professors, PhD students, and researchers">
+    <title>Our Team - MIRAI VISION LAB</title>
+    
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        /* Team Page Specific Styles */
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 8rem 0 4rem;
+            color: white;
+            text-align: center;
+        }
+        
+        .page-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .team-section {
+            margin-bottom: 4rem;
+        }
+        
+        .section-intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            color: var(--text-secondary);
+        }
+        
+        /* Professor Cards */
+        .professor-grid {
+            display: grid;
+            gap: 3rem;
+            margin-bottom: 4rem;
+        }
+        
+        .professor-card {
+            background: var(--bg-white);
+            border-radius: var(--radius-xl);
+            padding: 2.5rem;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            gap: 2rem;
+            transition: var(--transition-smooth);
+        }
+        
+        .professor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .professor-image {
+            flex-shrink: 0;
+        }
+        
+        .professor-image img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary-color);
+        }
+        
+        .professor-info h3 {
+            font-size: 1.75rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .professor-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+        }
+        
+        .professor-bio {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+        
+        .research-interests {
+            margin-bottom: 1.5rem;
+        }
+        
+        .research-interests h4 {
+            font-size: 1rem;
+            font-family: var(--font-primary);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        
+        .interests-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .interest-tag {
+            background: var(--bg-light);
+            padding: 0.375rem 0.875rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+        
+        .professor-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .prof-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: var(--radius-md);
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: var(--transition-base);
+        }
+        
+        .prof-link:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .prof-link.secondary {
+            background: var(--bg-light);
+            color: var(--text-primary);
+        }
+        
+        /* Student/Team Member Cards */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .team-card {
+            background: var(--bg-white);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition-smooth);
+            position: relative;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .team-image {
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .team-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+        
+        .team-card:hover .team-image img {
+            transform: scale(1.1);
+        }
+        
+        .team-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            padding: 1.5rem 1rem 1rem;
+            transform: translateY(0);
+            transition: var(--transition-base);
+        }
+        
+        .team-name {
+            color: white;
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .team-role {
+            color: rgba(255,255,255,0.9);
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+        
+        .team-info {
+            padding: 1.5rem;
+        }
+        
+        .team-research {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        
+        .team-contact {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            font-size: 0.875rem;
+        }
+        
+        .team-contact i {
+            font-size: 1rem;
+        }
+        
+        .team-social {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--bg-light);
+        }
+        
+        .team-social a {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--bg-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: var(--transition-base);
+        }
+        
+        .team-social a:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .category-header {
+            margin-bottom: 2rem;
+        }
+        
+        .category-header h3 {
+            font-size: 2rem;
+            color: var(--text-primary);
+            display: inline-block;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .category-header h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-primary);
+        }
+        
+        .category-count {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            font-size: 0.875rem;
+            font-weight: 700;
+            margin-left: 1rem;
+        }
+        
+        /* Team Filter Dropdown */
+        .team-filter-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+            gap: 1rem;
+        }
+        
+        .team-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-btn {
+            padding: 1rem 2rem;
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius-lg);
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition-base);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .dropdown-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .dropdown-btn i {
+            transition: transform 0.3s ease;
+        }
+        
+        .dropdown-btn.active i {
+            transform: rotate(180deg);
+        }
+        
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            margin-top: 0.5rem;
+            background: var(--bg-white);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+            overflow: hidden;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+            min-width: 250px;
+        }
+        
+        .dropdown-content.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-item {
+            padding: 1rem 1.5rem;
+            color: var(--text-primary);
+            display: block;
+            text-decoration: none;
+            transition: var(--transition-base);
+            border-bottom: 1px solid var(--bg-light);
+            cursor: pointer;
+        }
+        
+        .dropdown-item:last-child {
+            border-bottom: none;
+        }
+        
+        .dropdown-item:hover {
+            background: var(--bg-light);
+            padding-left: 2rem;
+        }
+        
+        .dropdown-item.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* Hide/Show sections based on selection */
+        .team-section-wrapper {
+            display: none;
+        }
+        
+        .team-section-wrapper.active {
+            display: block;
+        }
+        
+        @media (max-width: 768px) {
+            .team-filter-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .dropdown-btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .professor-card {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .professor-image {
+                margin: 0 auto;
+            }
+            
+            .professor-links {
+                justify-content: center;
+            }
+            
+            .team-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loader-wrapper">
+        <div class="loader"><div class="loader-inner"></div></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-text">MIRAI VISION</span>
+                <span class="logo-subtext">LAB</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-list">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="team.html" class="nav-link active">Team</a></li>
+                    <li><a href="research.html" class="nav-link">Research</a></li>
+                    <li><a href="publications.html" class="nav-link">Publications</a></li>
+                    <li><a href="achievements.html" class="nav-link">Achievements</a></li>
+                    <li><a href="gallery.html" class="nav-link">Gallery</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="page-header">
+        <div class="container">
+            <h1 class="page-title" data-aos="fade-up">Our Team</h1>
+            <div class="breadcrumb" data-aos="fade-up" data-aos-delay="100">
+                <a href="../index.html">Home</a>
+                <span>/</span>
+                <span>Team</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Team Filter Dropdown -->
+    <section class="section-padding" style="padding-top: 3rem; padding-bottom: 1rem;">
+        <div class="container">
+            <div class="team-filter-container" data-aos="fade-up">
+                <div class="team-dropdown">
+                    <button class="dropdown-btn" id="currentTeamBtn">
+                        Current Team
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="currentTeamDropdown">
+                        <div class="dropdown-item active" data-section="all-current">All Current Members</div>
+                        <div class="dropdown-item" data-section="professors">Principal Investigators</div>
+                        <div class="dropdown-item" data-section="phd">PhD Students</div>
+                        <div class="dropdown-item" data-section="mtech">M.Tech Students</div>
+                        <div class="dropdown-item" data-section="msc">M.Sc Students</div>
+                        <div class="dropdown-item" data-section="project">Project Students</div>
+                    </div>
+                </div>
+                
+                <div class="team-dropdown">
+                    <button class="dropdown-btn" id="alumniBtn">
+                        Alumni
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <div class="dropdown-content" id="alumniDropdown">
+                        <div class="dropdown-item" data-section="alumni">View Alumni</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Current Team Sections Wrapper -->
+    <div class="team-section-wrapper active" id="currentTeamWrapper">
+    <!-- Professors Section -->
+    <section class="section-padding" id="professors-section">
+        <div class="container">
+            <div class="section-header" data-aos="fade-up">
+                <h2 class="section-title">Principal Investigators</h2>
+                <div class="title-underline"></div>
+                <p class="section-subtitle">Leading researchers driving innovation in computer vision and AI</p>
+            </div>
+            
+            <div class="professor-grid">
+                <!-- Professor 1 -->
+                <div class="professor-card" data-aos="fade-up">
+                    <div class="professor-image">
+                        <img src="../images/team/professor1.jpg" alt="Dr. Sarah Chen" loading="lazy">
+                    </div>
+                    <div class="professor-info">
+                        <h3>Dr. Sarah Chen</h3>
+                        <p class="professor-title">Professor & Lab Director</p>
+                        <div class="professor-bio">
+                            <p>Dr. Chen is a leading expert in computer vision and deep learning with over 15 years of research experience. She received her Ph.D. from MIT and has published over 100 papers in top-tier conferences and journals. Her work focuses on advanced neural architectures, visual recognition, and their applications in autonomous systems.</p>
+                        </div>
+                        <div class="research-interests">
+                            <h4>Research Interests:</h4>
+                            <div class="interests-tags">
+                                <span class="interest-tag">Computer Vision</span>
+                                <span class="interest-tag">Deep Learning</span>
+                                <span class="interest-tag">Neural Architecture Search</span>
+                                <span class="interest-tag">Autonomous Systems</span>
+                            </div>
+                        </div>
+                        <div class="professor-links">
+                            <a href="mailto:sarah.chen@miraivision.edu" class="prof-link">
+                                <i class="fas fa-envelope"></i> Email
+                            </a>
+                            <a href="#" class="prof-link secondary">
+                                <i class="fas fa-globe"></i> Personal Website
+                            </a>
+                            <a href="#" class="prof-link secondary">
+                                <i class="fab fa-google"></i> Google Scholar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Professor 2 -->
+                <div class="professor-card" data-aos="fade-up" data-aos-delay="100">
+                    <div class="professor-image">
+                        <img src="../images/team/professor2.jpg" alt="Dr. Michael Rodriguez" loading="lazy">
+                    </div>
+                    <div class="professor-info">
+                        <h3>Dr. Michael Rodriguez</h3>
+                        <p class="professor-title">Associate Professor & Co-Director</p>
+                        <div class="professor-bio">
+                            <p>Dr. Rodriguez specializes in robotics, 3D vision, and human-robot interaction. He obtained his Ph.D. from Stanford University and has extensive experience in developing intelligent autonomous systems. His research has been recognized with multiple best paper awards and has led to several successful industry collaborations.</p>
+                        </div>
+                        <div class="research-interests">
+                            <h4>Research Interests:</h4>
+                            <div class="interests-tags">
+                                <span class="interest-tag">Robotics</span>
+                                <span class="interest-tag">3D Vision</span>
+                                <span class="interest-tag">SLAM</span>
+                                <span class="interest-tag">Human-Robot Interaction</span>
+                            </div>
+                        </div>
+                        <div class="professor-links">
+                            <a href="mailto:michael.rodriguez@miraivision.edu" class="prof-link">
+                                <i class="fas fa-envelope"></i> Email
+                            </a>
+                            <a href="#" class="prof-link secondary">
+                                <i class="fas fa-globe"></i> Personal Website
+                            </a>
+                            <a href="#" class="prof-link secondary">
+                                <i class="fab fa-google"></i> Google Scholar
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PhD Students Section -->
+    <section class="section-padding bg-light" id="phd-section">
+        <div class="container">
+            <div class="category-header" data-aos="fade-up">
+                <h3>PhD Students<span class="category-count">6</span></h3>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-card" data-aos="zoom-in">
+                    <div class="team-image">
+                        <img src="../images/team/phd1.jpg" alt="Emily Wang" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Emily Wang</div>
+                            <div class="team-role">PhD Student (4th Year)</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Research:</strong> Object detection and segmentation in medical images</p>
+                        <a href="mailto:emily.wang@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            emily.wang@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" aria-label="Google Scholar"><i class="fab fa-google"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="team-image">
+                        <img src="../images/team/phd2.jpg" alt="James Kim" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">James Kim</div>
+                            <div class="team-role">PhD Student (3rd Year)</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Research:</strong> Efficient neural architectures for edge devices</p>
+                        <a href="mailto:james.kim@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            james.kim@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="team-image">
+                        <img src="../images/team/phd3.jpg" alt="Priya Patel" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Priya Patel</div>
+                            <div class="team-role">PhD Student (3rd Year)</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Research:</strong> Video understanding and action recognition</p>
+                        <a href="mailto:priya.patel@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            priya.patel@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="team-image">
+                        <img src="../images/team/phd4.jpg" alt="Alex Thompson" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Alex Thompson</div>
+                            <div class="team-role">PhD Student (2nd Year)</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Research:</strong> 3D scene reconstruction and SLAM</p>
+                        <a href="mailto:alex.thompson@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            alex.thompson@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            <a href="#" aria-label="Website"><i class="fas fa-globe"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="team-image">
+                        <img src="../images/team/phd5.jpg" alt="Maria Garcia" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Maria Garcia</div>
+                            <div class="team-role">PhD Student (2nd Year)</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Research:</strong> Adversarial robustness in vision systems</p>
+                        <a href="mailto:maria.garcia@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            maria.garcia@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="team-image">
+                        <img src="../images/team/phd6.jpg" alt="David Lee" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">David Lee</div>
+                            <div class="team-role">PhD Student (1st Year)</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Research:</strong> Self-supervised learning for visual tasks</p>
+                        <a href="mailto:david.lee@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            david.lee@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- M.Tech Students Section -->
+    <section class="section-padding" id="mtech-section">
+        <div class="container">
+            <div class="category-header" data-aos="fade-up">
+                <h3>M.Tech Students<span class="category-count">5</span></h3>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-card" data-aos="zoom-in">
+                    <div class="team-image">
+                        <img src="../images/team/mtech1.jpg" alt="Ananya Sharma" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Ananya Sharma</div>
+                            <div class="team-role">M.Tech Student</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Research:</strong> Real-time object tracking systems</p>
+                        <a href="mailto:ananya.sharma@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            ananya.sharma@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="team-image">
+                        <img src="../images/team/mtech2.jpg" alt="Raj Kumar" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Raj Kumar</div>
+                            <div class="team-role">M.Tech Student</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Research:</strong> Facial recognition and biometrics</p>
+                        <a href="mailto:raj.kumar@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            raj.kumar@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="team-image">
+                        <img src="../images/team/mtech3.jpg" alt="Sophie Martin" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Sophie Martin</div>
+                            <div class="team-role">M.Tech Student</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Research:</strong> Semantic segmentation for autonomous driving</p>
+                        <a href="mailto:sophie.martin@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            sophie.martin@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="team-image">
+                        <img src="../images/team/mtech4.jpg" alt="Chen Wei" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Chen Wei</div>
+                            <div class="team-role">M.Tech Student</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Research:</strong> Image super-resolution techniques</p>
+                        <a href="mailto:chen.wei@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            chen.wei@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="team-image">
+                        <img src="../images/team/mtech5.jpg" alt="Ahmed Hassan" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Ahmed Hassan</div>
+                            <div class="team-role">M.Tech Student</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Research:</strong> Depth estimation from monocular images</p>
+                        <a href="mailto:ahmed.hassan@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            ahmed.hassan@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- M.Sc Students Section -->
+    <section class="section-padding bg-light" id="msc-section">
+        <div class="container">
+            <div class="category-header" data-aos="fade-up">
+                <h3>M.Sc Students<span class="category-count">4</span></h3>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-card" data-aos="zoom-in">
+                    <div class="team-image">
+                        <img src="../images/team/msc1.jpg" alt="Lisa Anderson" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Lisa Anderson</div>
+                            <div class="team-role">M.Sc Student</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Research:</strong> Transfer learning for medical imaging</p>
+                        <a href="mailto:lisa.anderson@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            lisa.anderson@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="team-image">
+                        <img src="../images/team/msc2.jpg" alt="Yuki Tanaka" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Yuki Tanaka</div>
+                            <div class="team-role">M.Sc Student</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Research:</strong> Scene text detection and recognition</p>
+                        <a href="mailto:yuki.tanaka@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            yuki.tanaka@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="team-image">
+                        <img src="../images/team/msc3.jpg" alt="Marco Silva" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Marco Silva</div>
+                            <div class="team-role">M.Sc Student</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Research:</strong> Optical flow estimation</p>
+                        <a href="mailto:marco.silva@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            marco.silva@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="team-image">
+                        <img src="../images/team/msc4.jpg" alt="Nina Kowalski" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Nina Kowalski</div>
+                            <div class="team-role">M.Sc Student</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Research:</strong> Generative models for image synthesis</p>
+                        <a href="mailto:nina.kowalski@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            nina.kowalski@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Students Section -->
+    <section class="section-padding" id="project-section">
+        <div class="container">
+            <div class="category-header" data-aos="fade-up">
+                <h3>Project Students<span class="category-count">5</span></h3>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-card" data-aos="zoom-in">
+                    <div class="team-image">
+                        <img src="../images/team/proj1.jpg" alt="Tom Wilson" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Tom Wilson</div>
+                            <div class="team-role">Project Student</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Project:</strong> Drone-based object detection system</p>
+                        <a href="mailto:tom.wilson@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            tom.wilson@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="team-image">
+                        <img src="../images/team/proj2.jpg" alt="Emma Brown" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Emma Brown</div>
+                            <div class="team-role">Project Student</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Project:</strong> Smart surveillance system with face detection</p>
+                        <a href="mailto:emma.brown@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            emma.brown@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="team-image">
+                        <img src="../images/team/proj3.jpg" alt="Oliver Zhang" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Oliver Zhang</div>
+                            <div class="team-role">Project Student</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Project:</strong> Gesture recognition for HCI</p>
+                        <a href="mailto:oliver.zhang@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            oliver.zhang@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="team-image">
+                        <img src="../images/team/proj4.jpg" alt="Isabella Costa" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Isabella Costa</div>
+                            <div class="team-role">Project Student</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Project:</strong> Plant disease detection app</p>
+                        <a href="mailto:isabella.costa@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            isabella.costa@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="team-card" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="team-image">
+                        <img src="../images/team/proj5.jpg" alt="Lucas Müller" loading="lazy">
+                        <div class="team-overlay">
+                            <div class="team-name">Lucas Müller</div>
+                            <div class="team-role">Project Student</div>
+                        </div>
+                    </div>
+                    <div class="team-info">
+                        <p class="team-research"><strong>Project:</strong> AR application for education</p>
+                        <a href="mailto:lucas.muller@miraivision.edu" class="team-contact">
+                            <i class="fas fa-envelope"></i>
+                            lucas.muller@miraivision.edu
+                        </a>
+                        <div class="team-social">
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                            <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    </div>
+    <!-- End Current Team Wrapper -->
+    
+    <!-- Alumni Section Wrapper -->
+    <div class="team-section-wrapper" id="alumniWrapper">
+        <section class="section-padding bg-light">
+            <div class="container">
+                <div class="section-header" data-aos="fade-up">
+                    <h2 class="section-title">Alumni</h2>
+                    <div class="title-underline"></div>
+                    <p class="section-subtitle">Our former members making impact worldwide</p>
+                </div>
+                
+                <div class="team-grid">
+                    <div class="team-card" data-aos="zoom-in">
+                        <div class="team-image">
+                            <img src="../images/team/alumni1.jpg" alt="Dr. John Doe" loading="lazy">
+                            <div class="team-overlay">
+                                <div class="team-name">Dr. John Doe</div>
+                                <div class="team-role">PhD Graduate (2023)</div>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <p class="team-research"><strong>Current Position:</strong> Senior Research Scientist at Google AI</p>
+                            <div class="team-social">
+                                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" aria-label="Website"><i class="fas fa-globe"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card" data-aos="zoom-in" data-aos-delay="100">
+                        <div class="team-image">
+                            <img src="../images/team/alumni2.jpg" alt="Dr. Jane Smith" loading="lazy">
+                            <div class="team-overlay">
+                                <div class="team-name">Dr. Jane Smith</div>
+                                <div class="team-role">PhD Graduate (2022)</div>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <p class="team-research"><strong>Current Position:</strong> Assistant Professor at MIT</p>
+                            <div class="team-social">
+                                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" aria-label="Website"><i class="fas fa-globe"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="team-card" data-aos="zoom-in" data-aos-delay="200">
+                        <div class="team-image">
+                            <img src="../images/team/alumni3.jpg" alt="Robert Johnson" loading="lazy">
+                            <div class="team-overlay">
+                                <div class="team-name">Robert Johnson</div>
+                                <div class="team-role">M.Tech Graduate (2024)</div>
+                            </div>
+                        </div>
+                        <div class="team-info">
+                            <p class="team-research"><strong>Current Position:</strong> ML Engineer at Tesla</p>
+                            <div class="team-social">
+                                <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                                <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <!-- End Alumni Wrapper -->
+
+    <!-- Join Us CTA -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content" data-aos="zoom-in">
+                <h2>Join Our Research Team</h2>
+                <p>We're looking for passionate researchers at all levels</p>
+                <div class="cta-buttons">
+                    <a href="contact.html" class="btn btn-light">Apply Now</a>
+                    <a href="research.html" class="btn btn-outline">View Research Areas</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>MIRAI VISION LAB</h3>
+                    <p>Advancing the future of AI and Computer Vision through innovative research and collaboration.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 University Ave, City, Country</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@miraivision.edu</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 MIRAI VISION LAB. All rights reserved.</p>
+                <p>Designed with <i class="fas fa-heart"></i> for research excellence</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="../js/main.js"></script>
+    
+    <script>
+        // Team Dropdown Functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentTeamBtn = document.getElementById('currentTeamBtn');
+            const alumniBtn = document.getElementById('alumniBtn');
+            const currentTeamDropdown = document.getElementById('currentTeamDropdown');
+            const alumniDropdown = document.getElementById('alumniDropdown');
+            const currentTeamWrapper = document.getElementById('currentTeamWrapper');
+            const alumniWrapper = document.getElementById('alumniWrapper');
+            
+            // Toggle Current Team Dropdown
+            currentTeamBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                currentTeamDropdown.classList.toggle('show');
+                currentTeamBtn.classList.toggle('active');
+                alumniDropdown.classList.remove('show');
+                alumniBtn.classList.remove('active');
+            });
+            
+            // Toggle Alumni Dropdown
+            alumniBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                alumniDropdown.classList.toggle('show');
+                alumniBtn.classList.toggle('active');
+                currentTeamDropdown.classList.remove('show');
+                currentTeamBtn.classList.remove('active');
+            });
+            
+            // Close dropdowns when clicking outside
+            document.addEventListener('click', function() {
+                currentTeamDropdown.classList.remove('show');
+                alumniDropdown.classList.remove('show');
+                currentTeamBtn.classList.remove('active');
+                alumniBtn.classList.remove('active');
+            });
+            
+            // Current Team Section Filtering
+            const currentTeamItems = currentTeamDropdown.querySelectorAll('.dropdown-item');
+            currentTeamItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    // Update active state
+                    currentTeamItems.forEach(i => i.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const section = this.getAttribute('data-section');
+                    
+                    // Show current team wrapper
+                    currentTeamWrapper.classList.add('active');
+                    alumniWrapper.classList.remove('active');
+                    
+                    // Hide/Show sections based on selection
+                    const allSections = ['professors-section', 'phd-section', 'mtech-section', 'msc-section', 'project-section'];
+                    
+                    if (section === 'all-current') {
+                        // Show all sections
+                        allSections.forEach(id => {
+                            const el = document.getElementById(id);
+                            if (el) el.style.display = 'block';
+                        });
+                    } else {
+                        // Hide all sections first
+                        allSections.forEach(id => {
+                            const el = document.getElementById(id);
+                            if (el) el.style.display = 'none';
+                        });
+                        
+                        // Show selected section
+                        const sectionMap = {
+                            'professors': 'professors-section',
+                            'phd': 'phd-section',
+                            'mtech': 'mtech-section',
+                            'msc': 'msc-section',
+                            'project': 'project-section'
+                        };
+                        
+                        const targetSection = document.getElementById(sectionMap[section]);
+                        if (targetSection) {
+                            targetSection.style.display = 'block';
+                            // Scroll to section smoothly
+                            setTimeout(() => {
+                                targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }, 100);
+                        }
+                    }
+                    
+                    // Close dropdown
+                    currentTeamDropdown.classList.remove('show');
+                    currentTeamBtn.classList.remove('active');
+                });
+            });
+            
+            // Alumni Section
+            const alumniItems = alumniDropdown.querySelectorAll('.dropdown-item');
+            alumniItems.forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    
+                    // Show alumni wrapper, hide current team
+                    alumniWrapper.classList.add('active');
+                    currentTeamWrapper.classList.remove('active');
+                    
+                    // Close dropdown
+                    alumniDropdown.classList.remove('show');
+                    alumniBtn.classList.remove('active');
+                    
+                    // Scroll to alumni section
+                    setTimeout(() => {
+                        alumniWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 100);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

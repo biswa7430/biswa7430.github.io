@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Photo gallery showcasing MIRAI VISION LAB activities, events, and team">
+    <title>Gallery - MIRAI VISION LAB</title>
+    
+    <link rel="icon" type="image/png" href="../images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <style>
+        .page-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 8rem 0 4rem;
+            color: white;
+            text-align: center;
+        }
+        
+        .page-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .gallery-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-button {
+            padding: 0.875rem 2rem;
+            background: white;
+            border: 2px solid var(--text-light);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: var(--transition-base);
+            font-weight: 600;
+        }
+        
+        .filter-button:hover,
+        .filter-button.active {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            aspect-ratio: 4/3;
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 1.5rem;
+            opacity: 0;
+            transition: var(--transition-base);
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-title {
+            color: white;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+        
+        .gallery-category {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.875rem;
+        }
+        
+        .lightbox {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .lightbox.active {
+            display: flex;
+        }
+        
+        .lightbox-content {
+            max-width: 90vw;
+            max-height: 90vh;
+            position: relative;
+        }
+        
+        .lightbox-content img {
+            max-width: 100%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+        
+        .lightbox-close {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: white;
+            color: var(--text-primary);
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition-base);
+        }
+        
+        .lightbox-close:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: rotate(90deg);
+        }
+        
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            transition: var(--transition-base);
+        }
+        
+        .lightbox-nav:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .lightbox-prev {
+            left: 2rem;
+        }
+        
+        .lightbox-next {
+            right: 2rem;
+        }
+        
+        .lightbox-caption {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: var(--radius-lg);
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="loader-wrapper">
+        <div class="loader"><div class="loader-inner"></div></div>
+    </div>
+
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="../index.html" class="logo">
+                <span class="logo-text">MIRAI VISION</span>
+                <span class="logo-subtext">LAB</span>
+            </a>
+            <div class="nav-menu" id="navMenu">
+                <ul class="nav-list">
+                    <li><a href="../index.html" class="nav-link">Home</a></li>
+                    <li><a href="about.html" class="nav-link">About</a></li>
+                    <li><a href="team.html" class="nav-link">Team</a></li>
+                    <li><a href="research.html" class="nav-link">Research</a></li>
+                    <li><a href="publications.html" class="nav-link">Publications</a></li>
+                    <li><a href="achievements.html" class="nav-link">Achievements</a></li>
+                    <li><a href="gallery.html" class="nav-link active">Gallery</a></li>
+                    <li><a href="contact.html" class="nav-link">Contact</a></li>
+                </ul>
+            </div>
+            <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                <i class="fas fa-moon"></i>
+            </button>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <div class="container">
+            <h1 class="page-title" data-aos="fade-up">Gallery</h1>
+            <div class="breadcrumb" data-aos="fade-up" data-aos-delay="100">
+                <a href="../index.html">Home</a>
+                <span>/</span>
+                <span>Gallery</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="section-padding">
+        <div class="container">
+            <div class="gallery-filters" data-aos="fade-up">
+                <button class="filter-button active" data-filter="all">All</button>
+                <button class="filter-button" data-filter="events">Events</button>
+                <button class="filter-button" data-filter="lab">Lab Life</button>
+                <button class="filter-button" data-filter="conferences">Conferences</button>
+                <button class="filter-button" data-filter="equipment">Equipment</button>
+                <button class="filter-button" data-filter="team">Team Activities</button>
+            </div>
+
+            <div class="gallery-grid">
+                <!-- Events -->
+                <div class="gallery-item" data-category="events" data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&h=450&fit=crop" alt="Lab Opening Ceremony 2018">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Lab Opening Ceremony</h3>
+                        <p class="gallery-category">Events • 2018</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="events" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?w=600&h=450&fit=crop" alt="Annual Lab Symposium 2024">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Annual Lab Symposium 2024</h3>
+                        <p class="gallery-category">Events • 2024</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="events" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=600&h=450&fit=crop" alt="Guest Lecture Series">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Distinguished Guest Lecture</h3>
+                        <p class="gallery-category">Events • 2025</p>
+                    </div>
+                </div>
+
+                <!-- Lab Life -->
+                <div class="gallery-item" data-category="lab" data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=600&h=450&fit=crop" alt="Research Discussion">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Team Research Discussion</h3>
+                        <p class="gallery-category">Lab Life • 2025</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="lab" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=450&fit=crop" alt="Collaborative Work">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Collaborative Brainstorming</h3>
+                        <p class="gallery-category">Lab Life • 2025</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="lab" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1573164713988-8665fc963095?w=600&h=450&fit=crop" alt="Late Night Research">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Dedicated Research Sessions</h3>
+                        <p class="gallery-category">Lab Life • 2025</p>
+                    </div>
+                </div>
+
+                <!-- Conferences -->
+                <div class="gallery-item" data-category="conferences" data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=600&h=450&fit=crop" alt="NeurIPS 2024">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">NeurIPS 2024 Conference</h3>
+                        <p class="gallery-category">Conferences • 2024</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="conferences" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=600&h=450&fit=crop" alt="CVPR 2024">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">CVPR 2024 Best Paper Award</h3>
+                        <p class="gallery-category">Conferences • 2024</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="conferences" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1560439514-4e9645039924?w=600&h=450&fit=crop" alt="ICCV Poster">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">ICCV 2023 Poster Session</h3>
+                        <p class="gallery-category">Conferences • 2023</p>
+                    </div>
+                </div>
+
+                <!-- Equipment -->
+                <div class="gallery-item" data-category="equipment" data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=450&fit=crop" alt="GPU Cluster">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">High-Performance GPU Cluster</h3>
+                        <p class="gallery-category">Equipment • 2024</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="equipment" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=600&h=450&fit=crop" alt="Robotics Setup">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Autonomous Robotics Platform</h3>
+                        <p class="gallery-category">Equipment • 2023</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="equipment" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1587825140708-dfaf72ae4b04?w=600&h=450&fit=crop" alt="VR Setup">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">VR/AR Research Station</h3>
+                        <p class="gallery-category">Equipment • 2024</p>
+                    </div>
+                </div>
+
+                <!-- Team Activities -->
+                <div class="gallery-item" data-category="team" data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&h=450&fit=crop" alt="Team Building">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Annual Team Retreat</h3>
+                        <p class="gallery-category">Team Activities • 2025</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="team" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1543269865-cbf427effbad?w=600&h=450&fit=crop" alt="Lab Celebration">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Best Paper Celebration</h3>
+                        <p class="gallery-category">Team Activities • 2024</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="team" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1511988617509-a57c8a288659?w=600&h=450&fit=crop" alt="Welcome Party">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">New Members Welcome Party</h3>
+                        <p class="gallery-category">Team Activities • 2025</p>
+                    </div>
+                </div>
+
+                <!-- Additional Photos -->
+                <div class="gallery-item" data-category="events" data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1540575861501-7cf05a4b125a?w=600&h=450&fit=crop" alt="Workshop">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Deep Learning Workshop</h3>
+                        <p class="gallery-category">Events • 2024</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="lab" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=600&h=450&fit=crop" alt="Code Review">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">Weekly Code Review Session</h3>
+                        <p class="gallery-category">Lab Life • 2025</p>
+                    </div>
+                </div>
+
+                <div class="gallery-item" data-category="conferences" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1540575861501-7cf05a4b125a?w=600&h=450&fit=crop" alt="ECCV">
+                    <div class="gallery-overlay">
+                        <h3 class="gallery-title">ECCV 2024 Presentation</h3>
+                        <p class="gallery-category">Conferences • 2024</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">
+            <i class="fas fa-times"></i>
+        </button>
+        <button class="lightbox-nav lightbox-prev" id="lightboxPrev">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="lightbox-nav lightbox-next" id="lightboxNext">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="lightbox-content" id="lightboxContent">
+            <img src="" alt="">
+            <div class="lightbox-caption" id="lightboxCaption"></div>
+        </div>
+    </div>
+
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content" data-aos="zoom-in">
+                <h2>Want to See More?</h2>
+                <p>Follow us on social media for daily updates</p>
+                <div class="cta-buttons">
+                    <a href="contact.html" class="btn btn-light">Get in Touch</a>
+                    <a href="../index.html" class="btn btn-outline">Back to Home</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>MIRAI VISION LAB</h3>
+                    <p>Advancing the future of AI and Computer Vision through innovative research and collaboration.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact Info</h4>
+                    <ul class="footer-contact">
+                        <li><i class="fas fa-map-marker-alt"></i> 123 University Ave, City, Country</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-envelope"></i> info@miraivision.edu</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 MIRAI VISION LAB. All rights reserved.</p>
+                <p>Designed with <i class="fas fa-heart"></i> for research excellence</p>
+            </div>
+        </div>
+    </footer>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="../js/main.js"></script>
+</body>
+</html>
